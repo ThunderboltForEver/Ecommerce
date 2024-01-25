@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState } from "react";
 import { useAppContext } from "@/context";
+import Image from "next/image";
 
 interface Product {
   id: number;
@@ -42,7 +43,7 @@ const CartPage = () => {
 
   useEffect(() => {
     fetchUserOrders();
-  }, []);
+  },[]);
 
   const fetchUserOrders = () => {
     const token = localStorage.getItem("token");
@@ -129,10 +130,13 @@ const CartPage = () => {
               key={order.id}
               className="bg-white shadow-md p-4 rounded-lg relative flex flex-col"
             >
-              <img
+              <Image
                 src={order.product.image}
                 alt={order.product.title}
                 className="h-48 w-full object-cover mb-4 rounded-lg"
+                width={324}
+                height={192}
+                priority
               />
               <h3 className="text-lg font-semibold mb-2">
                 {order.product.title}

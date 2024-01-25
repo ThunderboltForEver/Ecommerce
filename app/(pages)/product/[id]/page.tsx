@@ -2,6 +2,7 @@
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
 import ReactStars from "react-stars";
+import Image from "next/image";
 
 interface User {
   id: number;
@@ -117,7 +118,7 @@ const ProductDetails = () => {
     <div className="container mx-auto p-4 flex justify-center">
       {product ? (
         <div className="max-w-xl rounded overflow-hidden shadow-lg">
-          <img className="w-full" src={product.image} alt={product.title} />
+          <Image className="w-full" src={product.image} alt={product.title} width={500} height={400} priority/>
           <div className="px-6 py-4">
             <div className="font-bold text-xl mb-2">{product.title}</div>
             <p className="text-gray-700 text-base">{product.description}</p>

@@ -1,38 +1,37 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const CommentComponent: React.FC = () => {
   const [content, setContent] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const token = localStorage.getItem("token");
+
   const handleSubmit = async () => {
     setIsSubmitting(true);
-    useEffect(() => {
-      const token = localStorage.getItem("token");
-      console.log(token);
-    }, []);
+    if (token) {
+      try {
+        const response = await fetch(
+          "https://event-reg.app/flutter_test/api/comment",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ content }),
+          }
+        );
 
-    try {
-      const response = await fetch(
-        "https://event-reg.app/flutter_test/api/comment",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ content }),
+        if (response.ok) {
+          setContent("");
+        } else {
+          console.error("Failed to post comment");
         }
-      );
-
-      if (response.ok) {
-        console.log("Comment posted successfully");
-        setContent("");
-      } else {
-        console.error("Failed to post comment");
+      } catch (error) {
+        console.error("Error posting comment:", error);
+      } finally {
+        setIsSubmitting(false);
       }
-    } catch (error) {
-      console.error("Error posting comment:", error);
-    } finally {
-      setIsSubmitting(false);
     }
   };
 
