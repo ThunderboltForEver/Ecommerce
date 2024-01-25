@@ -1,0 +1,7 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.register-page,.login-page {
+  height: calc(100vh - 60px);
+}
